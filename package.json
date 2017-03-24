@@ -1,0 +1,31 @@
+{
+  "name": "bookstore",
+  "version": "1.0.0",
+  "description": "books and authors",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon app.js",
+    "build-css": "node-sass -w assets/stylesheets/shoestring.scss -o public/stylesheets"
+  },
+  "keywords": [
+    "books",
+    "authors",
+    "sequelize",
+    "express",
+    "node"
+  ],
+  "author": "Tina Heiligers",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "node-sass": "^4.5.1",
+    "nunjucks": "^3.0.0",
+    "path": "^0.12.7",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.3"
+  }
+}
