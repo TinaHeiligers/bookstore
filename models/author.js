@@ -18,12 +18,34 @@ var Author = db.define('Author', {
     //getBook, setBook, addBook, removeBook?
     //getBooks, setBooks, addBooks, removeBooks
 }, {
-    instanceMethods: {
-        getAllBooks: function() {
-            return this.getBooks();
-            //return all the books with the author_id in their field
+    classMethods: {
+        getAllBooks: function(authorId) {
+            //find all books where the author_id is authorId
+            if (!authorId) {
+                var err = new Error('No Author Provided');
+                throw err;
+            }
+
+            Book.findAll({
+                where: {
+                    author_id: authorId
+                }
+            }).then(function(returnedBooks) {
+                //returnedBooks will be an array
+                return returnedBooks;
+            })
         }
     }
-})
+},
+{
+    instanceMethods: {
+        getAllBooks: function() {
+            //return all the books with the author_id in their field
+            return this.getBooks().then(function(returnedBooks) {
+                return returnedBooks;
+            })
+        }
+    }
+});
 
 module.exports = Author;
