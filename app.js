@@ -4,6 +4,9 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var path = require('path');
 var nunjucks = require('nunjucks');
+var db = require('./models').db;
+
+// var routes = require('./routes');
 //INSTANCE OF APP
 var app = express();
 
@@ -23,6 +26,13 @@ nunjucks.configure('views', {noCache: true});
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
+//Error handling specifically for a page that isn't found
+app.use(function(req, res, next) {
+    var err = new Error('Page not found.');
+    err.status = 404;
+    next(err);
+});
+//Error handling for all other errors: final landing point for all errors
 app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status( err.status || 500);
@@ -32,6 +42,11 @@ app.use(function(err, req, res, next) {
     })
 })
 //sync with db and listen on server
-app.listen(3000, function() {
-    console.log('App listening on port 3000');
+db.sync({force: true})
+.then(function() {
+    console.log('db is synched')
+    app.listen(3000, function() {
+        console.log('App listening on port 3000');
+    })
 })
+
