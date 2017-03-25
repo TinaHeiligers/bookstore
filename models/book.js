@@ -22,6 +22,9 @@ var Book = db.define('Book', {
     //getterMethods
     getterMethods: {
         getBlurb: function() {
+            if(!this.synopsis) {
+                return '';
+            }
             return this.synopsis.slice(0, 10) + '...';
         }
     }

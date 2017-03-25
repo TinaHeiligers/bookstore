@@ -31,7 +31,7 @@ var Author = db.define('Author', {
                     author_id: authorId
                 }
             }).then(function(returnedBooks) {
-                //returnedBooks will be an array
+                //returnedBooks will" be an array
                 return returnedBooks;
             })
         }

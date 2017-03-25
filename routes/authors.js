@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var Author = require('../models').Author;
 //need the book model to get at all th books for an author?
-var book = require('../models').Book;
+var Book = require('../models').Book;
 
 module.exports = router;
 
@@ -19,15 +19,10 @@ router.get('/', function(req, res, next) {
 //create an author: comes with a body carrying all author info
 router.post('/', function(req, res, next) {
     Author.create(req.body)
-        .then(function(newAuthor) {
-            res.json({
-                author: newAuthor
-            });
-        })
-        .then(function() {
-            res.redirect('/');//redirect to all authors
-        })
-        .catch(next)
+    .then(function(createdAuthor) {
+        res.json(createdAuthor);
+    })
+    .catch(next);
 });
 //change author language
 //format of '/authors/author_id/newLangugage'
@@ -47,3 +42,23 @@ router.put('/:id', function(req, res, next) {
 });
 
 //delete author and all associated books
+router.delete('/:id', function(req, res, next) {
+    //find the book,
+    Author.findById(req.params.id)
+    .then(function(foundAuthor) {
+        foundAuthor.destroy();
+    })
+    .then(function() {
+        Book.destroy({
+            where:{
+                AuthorId: req.params.id
+            }})
+    })
+    .then(function() {
+        res.status(200).send();
+    })
+    .catch(next);
+});
+//find the author
+//remove the author
+////remove all books by that author

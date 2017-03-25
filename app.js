@@ -6,7 +6,7 @@ var path = require('path');
 var nunjucks = require('nunjucks');
 var db = require('./models').db;
 var authorRouter = require('./routes/authors');
-// var bookRouter = require('./routes/books');
+var bookRouter = require('./routes/books');
 
 //INSTANCE OF APP
 var app = express();
@@ -30,7 +30,7 @@ app.engine('html', nunjucks.render);
 //Routing
 
 app.use('/authors', authorRouter);
-// app.use('/books', booksRouter);
+app.use('/books', bookRouter);
 
 //Error handling specifically for a page that isn't found
 app.use(function(req, res, next) {
@@ -40,6 +40,7 @@ app.use(function(req, res, next) {
 });
 //Error handling for all other errors: final landing point for all errors
 app.use(function(err, req, res, next) {
+    console.log("THERE'S BEEN AN ERROR");
     console.error(err.stack);
     res.status( err.status || 500);
     res.render('errors', {
