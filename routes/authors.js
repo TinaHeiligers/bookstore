@@ -43,12 +43,14 @@ router.put('/:id', function(req, res, next) {
 
 //delete author and all associated books
 router.delete('/:id', function(req, res, next) {
-    //find the book,
+    //find the author
     Author.findById(req.params.id)
     .then(function(foundAuthor) {
+        //remove the author
         foundAuthor.destroy();
     })
     .then(function() {
+        //remove all books by that author
         Book.destroy({
             where:{
                 AuthorId: req.params.id
@@ -59,6 +61,6 @@ router.delete('/:id', function(req, res, next) {
     })
     .catch(next);
 });
-//find the author
-//remove the author
-////remove all books by that author
+
+
+
