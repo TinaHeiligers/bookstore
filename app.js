@@ -5,8 +5,9 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var nunjucks = require('nunjucks');
 var db = require('./models').db;
+var authorRouter = require('./routes/authors');
+// var bookRouter = require('./routes/books');
 
-// var routes = require('./routes');
 //INSTANCE OF APP
 var app = express();
 
@@ -26,6 +27,11 @@ nunjucks.configure('views', {noCache: true});
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
+//Routing
+
+app.use('/authors', authorRouter);
+// app.use('/books', booksRouter);
+
 //Error handling specifically for a page that isn't found
 app.use(function(req, res, next) {
     var err = new Error('Page not found.');
@@ -36,17 +42,16 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
     console.error(err.stack);
     res.status( err.status || 500);
-    res.render('error', {
+    res.render('errors', {
         message: err.message,
         error: err
     })
 })
 //sync with db and listen on server
-db.sync({force: true})
+db.sync({force: false})
 .then(function() {
     console.log('db is synched')
     app.listen(3000, function() {
         console.log('App listening on port 3000');
     })
 })
-
