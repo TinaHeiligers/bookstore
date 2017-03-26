@@ -13,7 +13,9 @@ module.exports = router;
 router.get('/', function(req, res, next) {
     Book.findAll({})
     .then(function(books) {
-        res.json({books: books});
+        res.render('booklist', {
+            books: books
+        })
     }).catch(next);
 });
 
@@ -63,6 +65,16 @@ function generateError (message, status) {
     err.status = status;
     return err;
 }
+router.get('/:id', function(req, res, next) {
+    Book.findById(req.params.id)
+    .then(function(foundBook) {
+        res.render('editbook', {
+            book: foundBook
+        })
+    })
+    .catch(next);
+})
+
 //for front-end, this route was interfering with the route for the add page.
 router.get('/book/:title', function (req, res, next) {
 
@@ -82,6 +94,11 @@ router.get('/book/:title', function (req, res, next) {
     .catch(next);
 
 });
+router.get('/add', function(req, res) {
+    // res.status(200);
+    res.render('addbook');
+});
+
 
 router.get('/search', function (req, res, next) {
     Book.findbByCategory(req.query.search)
@@ -94,7 +111,7 @@ router.get('/search', function (req, res, next) {
 })
 
 //change book title
-router.put('/:id', function(req, res, next) {
+router.put('/book/:id', function(req, res, next) {
     Book.update(req.body, {
         where: {id: req.params.id},
         returning: true
@@ -108,7 +125,7 @@ router.put('/:id', function(req, res, next) {
     .catch(next);
 });
 //delete ONE book
-router.delete('/:id', function(req, res, next) {
+router.delete('/book/:id', function(req, res, next) {
     //find the book,
     Book.findById(req.params.id)
     .then(function(foundBook) {
@@ -133,8 +150,3 @@ router.get('/search', function (req, res, next) {
 });
 
 //For front-end: add form for adding a book
-router.get('/add', function(req, res) {
-    res.status(200);
-    console.log("rendering out the addBook page");
-    res.render('addBook');
-});

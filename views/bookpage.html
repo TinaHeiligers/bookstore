@@ -4,11 +4,11 @@
 <h3>{{ book.title }}
     <small> (<a href="{{ book.route }}/similar">Similar</a>)</small>
 </h3>
-<h4>by <a href="/users/{{ book.author.id }}">{{ book.author.name }}</a></h4>
+<h4>by <a href="/authors/{{ book.author.id }}">{{ book.author.name }}</a></h4>
 <ul>
-    {% for tag in book.tags %}
+    {% for category in book.categories %}
     <li>
-        {{ tag }}
+        {{ category }}
     </li>
     {% endfor %}
 </ul>

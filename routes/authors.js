@@ -11,7 +11,9 @@ module.exports = router;
 router.get('/', function(req, res, next) {
     Author.findAll({})
         .then(function(authors) {
-            res.json({authors: authors});
+            res.render('authorlist',{
+                authors: authors
+            });
         })
         .catch(next);
 });
