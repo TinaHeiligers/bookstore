@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Static Home Page</title>
-</head>
-<body>
-    <h1>BookStore</h1>
-    <h2>Books & Authors</h2>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>Books</h3>
+  <hr>
+  <form method="GET" action="/books/search">
+  <!-- I don't have a search route yet -->
+    <input type="text" name="search" />
+    <button type="submit">Search</button>
+  </form>
+  <hr>
+  <ul class="list-unstyled">
+    <ul>
+      {% autoescape false %}
+      {% for book in books %}
+      <li>
+        {{ book | bookLink }}
+      </li>
+      {% endfor %}
+      {% endautoescape %}
+    </ul>
+  </ul>
+{% endblock %}

@@ -24,6 +24,7 @@
     "morgan": "^1.8.1",
     "node-sass": "^4.5.1",
     "nunjucks": "^3.0.0",
+    "nunjucks-autoescape": "^1.0.1",
     "path": "^0.12.7",
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",

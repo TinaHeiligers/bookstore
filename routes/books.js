@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
         res.json({books: books});
     }).catch(next);
 });
-//Create a book
 
+//Create a book without an Author
 router.post('/', function(req, res, next) {
     Book.create(req.body)
     .then(function(createdBook) {
@@ -25,6 +25,13 @@ router.post('/', function(req, res, next) {
     })
     .catch(next);
 });
+
+//Create a book with an Author: for front-end if getting there
+//Using a form where there will be a field for an Author Name
+//need to use Author.findOrCreate({ where: AuthorId: ...}).then(Book.create()) etc
+//I need to find the author by the req.body passed in from the field(this will be the author name). Then use the author name to get the Author Id to attach to the book
+//Then create the book etc.
+
 //change book title
 router.put('/:id', function(req, res, next) {
     Book.update(req.body, {
@@ -50,4 +57,45 @@ router.delete('/:id', function(req, res, next) {
         res.status(200).send();
     })
     .catch(next);
+});
+//For searching through books from the front-end:
+router.get('/search', function (req, res, next) {
+
+    Book.findByCategory(req.query.search)
+        .then(function (books) {
+            res.render('index', {
+                books: books
+            });
+        })
+        .catch(next);
+
+});
+
+//For front-end: add form for adding a book
+router.get('/add', function(req, res) {
+    res.render('addBook');
+});
+//for front-end
+router.get('/:title', function (req, res, next) {
+
+    Book.findOne({
+            where: {
+                title: req.params.title
+            },
+            include: [
+                {model: Author}
+            ]
+        })
+        .then(function (book) {
+            if (book === null) {
+                throw generateError('No book found with that title', 404);
+            } else {
+                res.render('booktitle', {
+                    book: book
+                });
+
+            }
+        })
+        .catch(next);
+
 });

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3>Authors</h3>
+<hr>
+<ul class="list-unstyled">
+    <ul>
+        {% for author in authors %}
+        <li>
+            <a href="/authors/{{ author.id }}">{{ author.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</ul>
+{% endblock %}

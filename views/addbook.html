@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>Add a Book</h3>
+  <hr>
+  <form method="POST" action="/books/">
+
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">Author Name</label>
+      <div class="col-sm-10">
+        <input name="name" type="text" class="form-control"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="title" class="col-sm-2 control-label">Book Title</label>
+      <div class="col-sm-10">
+        <input name="title" type="text" class="form-control"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="synopsis" class="col-sm-2 control-label">Synopsis</label>
+      <div class="col-sm-10">
+        <textarea name="synopsis"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ISBN" class="col-sm-2 control-label">ISBN</label>
+      <div class="col-sm-10">
+        <textarea name="ISBN" placeholder="978-3-16-148410-0"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="categories" class="col-sm-2 control-label">categories</label>
+      <div class="col-sm-10">
+        <input name="categories" type="text" class="form-control" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pubdate" class="col-sm-2 control-label">publication date</label>
+      <div class="col-sm-10">
+        <input name="pubdate" type="text" class="form-control" placeholder="2017-01-01"/>
+      </div>
+    </div>
+
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">submit</button>
+    </div>
+
+  </form>
+{% endblock %}

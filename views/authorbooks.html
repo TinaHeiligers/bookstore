@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3>Books written by {{ author.name }}</h3>
+<hr>
+<form method="GET" action="/books/search">
+    <input type="text" name="search" />
+    <button type="submit">Search</button>
+</form>
+<hr>
+<ul class="list-unstyled">
+    <ul>
+    	{% autoescape false %}
+        {% for book in books %}
+        <li>
+            {{ book | bookLink }}
+        </li>
+        {% endfor %}
+        {% endautoescape %}
+    </ul>
+</ul>
+{% endblock %}

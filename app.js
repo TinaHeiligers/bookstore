@@ -23,14 +23,23 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
 //templating for front end:
-nunjucks.configure('views', {noCache: true});
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
+var env = nunjucks.configure('views', {noCache: true});
+require('./filters')(env);
+var AutoEscapeExtension = require("nunjucks-autoescape")(nunjucks);
+env.addExtension('AutoEscapeExtension', new AutoEscapeExtension(env));
+
 
 //Routing
 
 app.use('/authors', authorRouter);
 app.use('/books', bookRouter);
+
+//rendering templates:
+// app.get('/', function(req, res) {
+//     res.render('index');
+// });
 
 //Error handling specifically for a page that isn't found
 app.use(function(req, res, next) {
@@ -49,7 +58,7 @@ app.use(function(err, req, res, next) {
     })
 })
 //sync with db and listen on server
-db.sync({force: false})
+db.sync({force: true})
 .then(function() {
     console.log('db is synched')
     app.listen(3000, function() {
