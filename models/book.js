@@ -10,7 +10,8 @@ var Book = db.define('Book', {
     //Author comes from association (Book.belongsTo(Author))?, not nescessarily
     //The association will add an Author_id to the table, gives me access to getAuthor, setAuthor, addAuthor, removeAuthor
     ISBN: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: "123-4-56-789102-0"
     },
     synopsis: {
         type: Sequelize.TEXT

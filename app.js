@@ -58,7 +58,7 @@ app.use(function(err, req, res, next) {
     })
 })
 //sync with db and listen on server
-db.sync({force: true})
+db.sync({force: false})
 .then(function() {
     console.log('db is synched')
     app.listen(3000, function() {

@@ -17,15 +17,70 @@ router.get('/', function(req, res, next) {
     }).catch(next);
 });
 
-//Create a book without an Author
+//Create a book without an Author, add book to db, adding author to db not working yet through the form.
+// router.post('/', function(req, res, next) {
+//     Book.create(req.body)
+//     .then(function(createdBook) {
+//         console.log('book created', createdBook.dataValues);
+//         //create a book page to render out here
+//         res.json(createdBook);
+//     })
+//     .catch(next);
+// });
+
 router.post('/', function(req, res, next) {
-    Book.create(req.body)
-    .then(function(createdBook) {
-        console.log('book created', createdBook.dataValues);
-        //create a book page to render out here
-        res.json(createdBook);
+    //currently, if the author does not exist, this bombs out.
+    // console.log(req.body.name, req.body.language);
+    Author.findOrCreate({
+        where: {
+            name: req.body.name,
+            language: req.body.language
+        }
+    })
+    .spread(function(returnedAuthor, createdBookBool) {
+        // console.log('returnedAuthor: ?????');
+        console.log(returnedAuthor.dataValues);
+        return Book.create({
+            title: req.body.title,
+            synopsis: req.body.synopsis,
+            ISBN: req.body.ISBN,
+            categories: req.body.categories,
+            pubDate: req.body.pubDate,
+            AuthorId: returnedAuthor.dataValues.id
+        })
+        .then(function(newBook) {
+            // res.json(newBook);
+            res.render('booktitle', {
+                book: newBook
+            });
+        })
+        .catch(next);
+    });
+});
+
+function generateError (message, status) {
+    let err = new Error(message);
+    err.status = status;
+    return err;
+}
+//for front-end, this route was interfering with the route for the add page.
+router.get('/book/:title', function (req, res, next) {
+
+    Book.findOne({
+            where: {
+                title: req.params.title
+            },
+            include: [
+                {model: Author}
+            ]
+        })
+        .then(function (book) {
+            res.render('booktitle', {
+                book: book
+            });
     })
     .catch(next);
+
 });
 
 router.get('/search', function (req, res, next) {
@@ -79,29 +134,7 @@ router.get('/search', function (req, res, next) {
 
 //For front-end: add form for adding a book
 router.get('/add', function(req, res) {
+    res.status(200);
+    console.log("rendering out the addBook page");
     res.render('addBook');
-});
-//for front-end
-router.get('/:title', function (req, res, next) {
-
-    Book.findOne({
-            where: {
-                title: req.params.title
-            },
-            include: [
-                {model: Author}
-            ]
-        })
-        .then(function (book) {
-            if (book === null) {
-                throw generateError('No book found with that title', 404);
-            } else {
-                res.render('booktitle', {
-                    book: book
-                });
-
-            }
-        })
-        .catch(next);
-
 });
