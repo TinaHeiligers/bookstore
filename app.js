@@ -37,9 +37,9 @@ app.use('/authors', authorRouter);
 app.use('/books', bookRouter);
 
 //rendering templates:
-// app.get('/', function(req, res) {
-//     res.render('index');
-// });
+app.get('/', function(req, res) {
+    res.render('index');
+});
 
 //Error handling specifically for a page that isn't found
 app.use(function(req, res, next) {

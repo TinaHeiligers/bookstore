@@ -1,3 +1,4 @@
+
 'use strict';
 
 var express = require('express');
@@ -27,11 +28,15 @@ router.post('/', function(req, res, next) {
     .catch(next);
 });
 
-//Create a book with an Author: for front-end if getting there
-//Using a form where there will be a field for an Author Name
-//need to use Author.findOrCreate({ where: AuthorId: ...}).then(Book.create()) etc
-//I need to find the author by the req.body passed in from the field(this will be the author name). Then use the author name to get the Author Id to attach to the book
-//Then create the book etc.
+router.get('/search', function (req, res, next) {
+    Book.findbByCategory(req.query.search)
+        .then(function(books) {
+            res.render('index', {
+                books: books
+            });
+        })
+        .catch(next);
+})
 
 //change book title
 router.put('/:id', function(req, res, next) {

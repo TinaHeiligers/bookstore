@@ -55,6 +55,20 @@ var Book = db.define('Book', {
                 }
             });
         }
+    },
+    instanceMethods: {
+        findSimilar: function () {
+            return Book.findAll({
+                where: {
+                    id: {
+                        $ne: this.id
+                    },
+                    categories: {
+                        $overlap: this.categories
+                    }
+                }
+            });
+        }
     }
 });
 
