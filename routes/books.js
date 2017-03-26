@@ -46,6 +46,7 @@ router.put('/:id', function(req, res, next) {
     })
     .catch(next);
 });
+
 //delete ONE book
 router.delete('/:id', function(req, res, next) {
     //find the book,
@@ -58,6 +59,7 @@ router.delete('/:id', function(req, res, next) {
     })
     .catch(next);
 });
+
 //For searching through books from the front-end:
 router.get('/search', function (req, res, next) {
 
@@ -75,6 +77,7 @@ router.get('/search', function (req, res, next) {
 router.get('/add', function(req, res) {
     res.render('addBook');
 });
+
 //for front-end
 router.get('/:title', function (req, res, next) {
 
