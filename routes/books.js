@@ -20,7 +20,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     Book.create(req.body)
     .then(function(createdBook) {
-        console.log('book created', createdBook)
+        console.log('book created', createdBook.dataValues);
+        //create a book page to render out here
         res.json(createdBook);
     })
     .catch(next);

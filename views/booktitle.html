@@ -3,7 +3,7 @@
 {% block content %}
 <h3>{{ book.title }}
 </h3>
-<h4>by <a href="/authors/{{ book.author.id }}">{{ book.author.name }}</a></h4>
+<h4>by <a href="/books/{{ book.id }}">{{ book.title }}</a></h4>
 <ul>
     {% for category in book.categories %}
     <li>
@@ -17,4 +17,3 @@
 <a href="{{ book.route }}/edit" class="btn btn-primary">edit this book</a>
 <a href="{{ book.route }}/delete" class="btn btn-danger">delete this book</a>
 {% endblock %}
-<!-- /authors/{{ book.author.id }} ROUTE TO ADD!!! -->
