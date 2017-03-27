@@ -7,11 +7,8 @@
     <ul>
         {% for book in books %}
         <li>
-        {{ book.title }}
-            <!-- <a href="/books/{{ book.id }}">{{ book.title }}</a> -->
-        </li>
-        <li>
-        {{ book.synposis }}
+        <!-- IN BOOKLIST.HTML -->
+            <a href="/books/book/{{ book.id }}">{{ book.title }}</a>
         </li>
         {% endfor %}
     </ul>
