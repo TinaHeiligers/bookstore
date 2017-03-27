@@ -13,10 +13,7 @@ module.exports = router;
 router.get('/', function(req, res, next) {
     Book.findAll({})
     .then(function(books) {
-<<<<<<< HEAD
-=======
         // res.json({books: books});
->>>>>>> workingstate
         res.render('booklist', {
             books: books
         })
@@ -108,36 +105,7 @@ router.get('/search', function (req, res, next) {
 });
 
 //For front-end: add form for adding a book
-<<<<<<< HEAD
-=======
-router.get('/add', function(req, res) {
-    res.status(200);
-    console.log("rendering out the addBook page");
-    res.render('addBook');
+router.get('/add', function(req, res, next) {
+    res.status(200)
+    res.render('addbook')
 });
-
-function generateError (message, status) {
-    let err = new Error(message);
-    err.status = status;
-    return err;
-}
-//for front-end, this route was interfering with the route for the add page.
-router.get('/book/:title', function (req, res, next) {
-
-    Book.findOne({
-            where: {
-                title: req.params.title
-            },
-            include: [
-                {model: Author}
-            ]
-        })
-        .then(function (book) {
-            res.render('booktitle', {
-                book: book
-            });
-    })
-    .catch(next);
-
-});
->>>>>>> workingstate
