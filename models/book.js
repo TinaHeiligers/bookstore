@@ -12,6 +12,9 @@ var Book = db.define('Book', {
     ISBN: {
         type: Sequelize.STRING,
         defaultValue: "123-4-56-789102-0"
+        //I could add a validation here to change this to INTEGER
+        //Then need a hook to remove all '-' from the numbers to make it url-friendly
+        //Then make a urlISBN field to enable searching by ISBN
     },
     synopsis: {
         type: Sequelize.TEXT
@@ -71,6 +74,7 @@ var Book = db.define('Book', {
             });
         }
     }
+    // add a hook with beforeValidate to strip the ISBN of '-' and turn it into an integer
 });
 
 module.exports = Book;
