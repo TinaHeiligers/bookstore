@@ -3,7 +3,9 @@
 {% block content %}
 <h3>{{ book.title }}
 </h3>
-<h4>by <a href="/books/{{ book.id }}">{{ book.title }}</a></h4>
+<!-- <h4>by <a href="/books/book/{{ book.id }}">{{ book.title }}</a></h4> -->
+<!-- GETTING ERROR: path must be a string, so what's going in here is an integer -->
+<h4>by <a href="#">{{ book.title }}</a></h4>
 <ul>
     {% for category in book.categories %}
     <li>
@@ -14,6 +16,7 @@
 <hr/>
 <div class="book-body">{% autoescape false %}{{ book.renderedSynopsis }}{% endautoescape %}</div>
 <hr/>
-<a href="{{ book.route }}/edit" class="btn btn-primary">edit this book</a>
-<a href="{{ book.route }}/delete" class="btn btn-danger">delete this book</a>
+<!-- IN booktitle.html PAGE -->
+<a href="#" class="btn btn-primary">edit this book</a>
+<a href="#" class="btn btn-danger">delete this book</a>
 {% endblock %}
